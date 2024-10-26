@@ -11,4 +11,5 @@ public class CropMonitorApplication {
 		SpringApplication.run(CropMonitorApplication.class, args);
 	}
 
+
 }
