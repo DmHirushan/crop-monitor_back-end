@@ -15,7 +15,7 @@ import java.util.List;
 @Table(name = "staff")
 public class Staff {
     @Id
-    @Column(name = "id")
+    @Column(name = "staff_member_id")
     private String id;
     @Column(name = "first_name")
     private String firstName;
@@ -47,6 +47,10 @@ public class Staff {
     private Role role;
 
     @ManyToMany(mappedBy = "staff")
-    @Column(name = "fields")
+//    @Column(name = "fields")
     private List<Field> fields;
+
+    @OneToMany(mappedBy = "allocatedStaffMemberDetails")
+//    @Column(name = "vehicle")
+    private List<Vehicle> vehicles;
 }
