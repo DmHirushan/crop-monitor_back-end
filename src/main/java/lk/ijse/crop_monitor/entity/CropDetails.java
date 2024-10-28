@@ -14,6 +14,7 @@ import java.util.List;
 @Table(name = "crop_details")
 public class CropDetails {
     @Id
+    @Column(name = "log_code")
     private String logCode;
     private Date logDate;
     private String logDetails;

@@ -32,4 +32,11 @@ public class Field {
     private String image1;
     @Column(name = "image_2", columnDefinition = "LONGTEXT")
     private String image2;
+
+    @OneToMany(mappedBy = "assignedFieldDetails")
+    private List<Equipment> equipment;
+
+    @ManyToOne
+    @JoinColumn(name = "log_code")
+    private CropDetails cropDetails;
 }
