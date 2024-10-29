@@ -2,7 +2,9 @@ package lk.ijse.crop_monitor.controller;
 
 import lk.ijse.crop_monitor.customObj.CropResponse;
 import lk.ijse.crop_monitor.dto.impl.CropDto;
+import lk.ijse.crop_monitor.dto.impl.UserDto;
 import lk.ijse.crop_monitor.exception.DataPersistFailedException;
+import lk.ijse.crop_monitor.exception.NotFoundException;
 import lk.ijse.crop_monitor.service.CropService;
 import lk.ijse.crop_monitor.util.AppUtil;
 import lombok.RequiredArgsConstructor;
@@ -56,5 +58,50 @@ public class CropController {
     @GetMapping("/{cropCode}")
     public CropResponse getSelectedCrop(@PathVariable ("cropCode") String cropCode){
         return cropService.getCrop(cropCode);
+    }
+
+    @DeleteMapping
+    public ResponseEntity<Void> deleteCrop(@PathVariable ("cropCode") String cropCode){
+        try{
+            cropService.deleteCrop(cropCode);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }catch (NotFoundException e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PatchMapping
+    public ResponseEntity<Void> updateCrop(
+            @RequestPart ("cropCode") String cropCode,
+            @RequestPart ("cropCommonName") String cropCommonName,
+            @RequestPart ("cropScientificName") String cropScientificName,
+            @RequestPart ("cropImage") MultipartFile cropImage,
+            @RequestPart ("category") String category,
+            @RequestPart ("cropSeason") String cropSeason,
+            @RequestPart ("fieldCode") String fieldCode,
+            @RequestPart ("cropDetailsCode") String cropDetailsCode
+    ){
+        try{
+            byte[] bytes = cropImage.getBytes();
+            String updatedImage = AppUtil.toBase64Image(bytes);
+            CropDto updateCrop = new CropDto();
+            updateCrop.setCropCode(cropCode);
+            updateCrop.setCropCommonName(cropCommonName);
+            updateCrop.setCropScientificName(cropScientificName);
+            updateCrop.setCropImage(updatedImage);
+            updateCrop.setCategory(category);
+            updateCrop.setCropSeason(cropSeason);
+            updateCrop.setFieldCode(fieldCode);
+            updateCrop.setCropDetailsCode(cropDetailsCode);
+            cropService.updateCrop(updateCrop);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }catch (NotFoundException e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        
     }
 }
