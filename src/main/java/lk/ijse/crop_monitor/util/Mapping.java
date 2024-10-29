@@ -6,6 +6,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Component
 public class Mapping {
     @Autowired
@@ -17,6 +20,13 @@ public class Mapping {
 
     public <D, E> D convertToDto(E entity, Class<D> dtoClass) {
         return modelMapper.map(entity, dtoClass);
+    }
+
+
+    public <D, E> List<D> convertToDto(List<E> entityList, Class<D> dtoClass) {
+        return entityList.stream()
+                .map(entity -> modelMapper.map(entity, dtoClass))
+                .collect(Collectors.toList());
     }
 
 
