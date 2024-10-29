@@ -3,6 +3,7 @@ package lk.ijse.crop_monitor.controller;
 import lk.ijse.crop_monitor.customObj.CropDetailResponse;
 import lk.ijse.crop_monitor.dto.impl.CropDetailsDto;
 import lk.ijse.crop_monitor.exception.DataPersistFailedException;
+import lk.ijse.crop_monitor.exception.NotFoundException;
 import lk.ijse.crop_monitor.service.CropDetailService;
 import lk.ijse.crop_monitor.util.AppUtil;
 import lombok.RequiredArgsConstructor;
@@ -49,5 +50,17 @@ public class CropDetailController {
     @GetMapping("/{logCode}")
     public CropDetailResponse getCropDetail(@PathVariable ("logCode") String logCode){
         return cropDetailService.getCropDetail(logCode);
+    }
+
+    @DeleteMapping("/{logCode}")
+    public ResponseEntity<Void> deleteCropDetail(@PathVariable ("logCode") String logCode){
+        try{
+            cropDetailService.deleteCropDetail(logCode);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }catch (NotFoundException e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
