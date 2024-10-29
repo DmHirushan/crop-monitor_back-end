@@ -6,6 +6,7 @@ import lk.ijse.crop_monitor.customObj.impl.CropErrorResponse;
 import lk.ijse.crop_monitor.dto.impl.CropDto;
 import lk.ijse.crop_monitor.entity.Crop;
 import lk.ijse.crop_monitor.exception.DataPersistFailedException;
+import lk.ijse.crop_monitor.exception.NotFoundException;
 import lk.ijse.crop_monitor.repository.CropRepository;
 import lk.ijse.crop_monitor.service.CropService;
 import lk.ijse.crop_monitor.util.AppUtil;
@@ -13,6 +14,8 @@ import lk.ijse.crop_monitor.util.Mapping;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -38,6 +41,17 @@ public class CropServiceImpl implements CropService {
             return new CropErrorResponse(0, "Crop not found");
         }
     }
+
+    @Override
+    public void deleteCrop(String cropCode) {
+        Optional<Crop> selectedCrop = cropRepository.findById(cropCode);
+        if (!selectedCrop.isPresent()){
+            throw new NotFoundException("User not found");
+        }else {
+            cropRepository.deleteById(cropCode);
+        }
+    }
+
 
 
 }
