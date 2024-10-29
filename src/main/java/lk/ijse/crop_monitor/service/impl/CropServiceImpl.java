@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -52,6 +53,26 @@ public class CropServiceImpl implements CropService {
         }
     }
 
+    @Override
+    public void updateCrop(CropDto cropDto) {
+        Optional<Crop> tmpCrop = cropRepository.findById(cropDto.getCropCode());
+        if (!tmpCrop.isPresent()){
+            throw new NotFoundException("Crop not found");
+        }else {
+            tmpCrop.get().setCropCommonName(cropDto.getCropCommonName());
+            tmpCrop.get().setCropScientificName(cropDto.getCropScientificName());
+            tmpCrop.get().setCropImage(cropDto.getCropImage());
+            tmpCrop.get().setCategory(cropDto.getCategory());
+            tmpCrop.get().setCropSeason(cropDto.getCropSeason());
+            tmpCrop.get().getField().setFieldCode((cropDto.getFieldCode()));
+            tmpCrop.get().getCropDetails().setLogCode((cropDto.getFieldCode()));
+        }
+    }
+
+    @Override
+    public List<CropDto> getAllCrops() {
+        return mapping.convertToDto(cropRepository.findAll(), CropDto.class);
+    }
 
 
 }
