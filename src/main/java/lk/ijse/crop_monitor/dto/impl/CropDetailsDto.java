@@ -1,5 +1,6 @@
 package lk.ijse.crop_monitor.dto.impl;
 
+import lk.ijse.crop_monitor.customObj.CropDetailResponse;
 import lk.ijse.crop_monitor.dto.SuperDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,7 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class CropDetailsDto implements SuperDto {
+public class CropDetailsDto implements SuperDto, CropDetailResponse {
     private String logCode;
     private Date logDate;
     private String logDetails;

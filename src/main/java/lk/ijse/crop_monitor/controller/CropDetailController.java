@@ -1,5 +1,6 @@
 package lk.ijse.crop_monitor.controller;
 
+import lk.ijse.crop_monitor.customObj.CropDetailResponse;
 import lk.ijse.crop_monitor.dto.impl.CropDetailsDto;
 import lk.ijse.crop_monitor.exception.DataPersistFailedException;
 import lk.ijse.crop_monitor.service.CropDetailService;
@@ -43,5 +44,10 @@ public class CropDetailController {
         }catch (Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @GetMapping("/{logCode}")
+    public CropDetailResponse getCropDetail(@PathVariable ("logCode") String logCode){
+        return cropDetailService.getCropDetail(logCode);
     }
 }
