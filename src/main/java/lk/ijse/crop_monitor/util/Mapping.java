@@ -15,4 +15,9 @@ public class Mapping {
         return modelMapper.map(dto, entityClass);
     }
 
+    public <D, E> D convertToDto(E entity, Class<D> dtoClass) {
+        return modelMapper.map(entity, dtoClass);
+    }
+
+
 }
