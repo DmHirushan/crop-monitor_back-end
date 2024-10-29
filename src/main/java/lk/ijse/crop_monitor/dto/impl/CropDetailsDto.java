@@ -16,7 +16,7 @@ public class CropDetailsDto implements SuperDto {
     private String logDetails;
     private String observedImage;
 
-    private List<String> fieldCodes;    // List of field codes associated with this log
-    private List<String> cropCodes;     // List of crop codes associated with this log
-    private List<String> staffIds;      // List of staff member IDs associated with this log
+//    private List<String> fieldCodes;    // List of field codes associated with this log
+//    private List<String> cropCodes;     // List of crop codes associated with this log
+//    private List<String> staffIds;      // List of staff member IDs associated with this log
 }

@@ -11,4 +11,8 @@ public class AppUtil {
     public static String createCropCode(){
         return "CROP-"+ UUID.randomUUID();
     }
+
+    public static String createCropDetailCode(){
+        return "CROP_DETAIL-"+ UUID.randomUUID();
+    }
 }
