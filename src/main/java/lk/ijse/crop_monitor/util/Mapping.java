@@ -11,7 +11,8 @@ public class Mapping {
     @Autowired
     private ModelMapper modelMapper;
 
-    public Crop convertToEntity(CropDto dto) {
-        return modelMapper.map(dto, Crop.class);
+    public <D, E> E convertToEntity(D dto, Class<E> entityClass) {
+        return modelMapper.map(dto, entityClass);
     }
+
 }
