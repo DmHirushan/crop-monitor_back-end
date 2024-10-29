@@ -24,10 +24,10 @@ public class Crop {
     private String category;
     private String cropSeason;
     @ManyToOne
-    @JoinColumn(name = "field_code")
+    @JoinColumn(name = "field_code", nullable = false)
     private Field field;
 
     @ManyToOne
-    @JoinColumn(name = "log_code")
+    @JoinColumn(name = "log_code", nullable = false)
     private CropDetails cropDetails;
 }
