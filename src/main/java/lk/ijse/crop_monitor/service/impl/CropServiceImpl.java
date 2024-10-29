@@ -1,6 +1,8 @@
 package lk.ijse.crop_monitor.service.impl;
 
 import jakarta.transaction.Transactional;
+import lk.ijse.crop_monitor.customObj.CropResponse;
+import lk.ijse.crop_monitor.customObj.impl.CropErrorResponse;
 import lk.ijse.crop_monitor.dto.impl.CropDto;
 import lk.ijse.crop_monitor.entity.Crop;
 import lk.ijse.crop_monitor.exception.DataPersistFailedException;
@@ -26,6 +28,16 @@ public class CropServiceImpl implements CropService {
         if (savedUser == null && savedUser.getCropCode() == null) {
             throw new DataPersistFailedException("Can't save the crop!");
         }
-
     }
+
+    @Override
+    public CropResponse getCrop(String cropCode) {
+        if (cropRepository.existsById(cropCode)) {
+            return mapping.convertToDto(cropRepository.getCropByCropCode(cropCode), CropDto.class);
+        }else {
+            return new CropErrorResponse(0, "Crop not found");
+        }
+    }
+
+
 }
