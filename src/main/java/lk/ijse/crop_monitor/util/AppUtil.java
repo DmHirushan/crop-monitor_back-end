@@ -15,4 +15,8 @@ public class AppUtil {
     public static String createCropDetailCode(){
         return "CROP_DETAIL-"+ UUID.randomUUID();
     }
+
+    public static String createStaffId(){
+        return "STAFF_MEMBER"+ UUID.randomUUID();
+    }
 }
