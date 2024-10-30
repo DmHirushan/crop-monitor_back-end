@@ -1,5 +1,7 @@
 package lk.ijse.crop_monitor.dto.impl;
 
+import lk.ijse.crop_monitor.customObj.StaffResponse;
+import lk.ijse.crop_monitor.dto.SuperDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,7 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class StaffDto {
+public class StaffDto implements SuperDto, StaffResponse {
     private String id;
     private String firstName;
     private String lastName;
