@@ -16,6 +16,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/crop_detail")
@@ -84,5 +85,10 @@ public class CropDetailController {
         }catch (Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @GetMapping("/get_all")
+    public List<CropDetailsDto> getAllCropDetails(){
+        return cropDetailService.getAllCropDetails();
     }
 }

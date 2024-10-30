@@ -16,6 +16,7 @@ import lk.ijse.crop_monitor.util.Mapping;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -62,6 +63,10 @@ public class CropDetailServiceImpl implements CropDetailService {
             tmpSelectedNoteDetail.get().setLogDetails(cropDetailsDto.getLogDetails());
             tmpSelectedNoteDetail.get().setObservedImage(cropDetailsDto.getObservedImage());
         }
+    }
+
+    public List<CropDetailsDto> getAllCropDetails(){
+        return mapping.convertToDto(cropDetailRepository.findAll(), CropDetailsDto.class);
     }
 
 
