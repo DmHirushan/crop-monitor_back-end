@@ -55,7 +55,13 @@ public class CropDetailServiceImpl implements CropDetailService {
 
     @Override
     public void updateCropDetail(CropDetailsDto cropDetailsDto) {
-
+        Optional<CropDetails> tmpSelectedNoteDetail = cropDetailRepository.findById(cropDetailsDto.getLogCode());
+        if (!tmpSelectedNoteDetail.isPresent()){
+            throw new NotFoundException("Crop Detail not found");
+        }else {
+            tmpSelectedNoteDetail.get().setLogDetails(cropDetailsDto.getLogDetails());
+            tmpSelectedNoteDetail.get().setObservedImage(cropDetailsDto.getObservedImage());
+        }
     }
 
 

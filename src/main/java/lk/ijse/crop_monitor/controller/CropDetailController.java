@@ -34,7 +34,6 @@ public class CropDetailController {
             CropDetailsDto cropDetailsDto = new CropDetailsDto();
             cropDetailsDto.setLogDate(new Date());
             cropDetailsDto.setLogDetails(logDetails);
-            cropDetailsDto.setLogDetails(logDetails);
             byte[] bytes = observedImage.getBytes();
             String base64Image = AppUtil.toBase64Image(bytes);
             cropDetailsDto.setObservedImage(base64Image);
@@ -56,6 +55,29 @@ public class CropDetailController {
     public ResponseEntity<Void> deleteCropDetail(@PathVariable ("logCode") String logCode){
         try{
             cropDetailService.deleteCropDetail(logCode);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }catch (NotFoundException e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PatchMapping("/{logCode}")
+    public ResponseEntity<Void> updateCropDetail(
+            @PathVariable ("logCode") String logCode,
+            @RequestPart ("logDetails") String logDetails,
+            @RequestPart ("observedImage")MultipartFile observedImage
+    ){
+        try{
+            CropDetailsDto cropDetailsDto = new CropDetailsDto();
+            cropDetailsDto.setLogCode(logCode);
+            cropDetailsDto.setLogDate(new Date());
+            cropDetailsDto.setLogDetails(logDetails);
+            byte[] bytes = observedImage.getBytes();
+            String base64Image = AppUtil.toBase64Image(bytes);
+            cropDetailsDto.setObservedImage(base64Image);
+            cropDetailService.updateCropDetail(cropDetailsDto);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }catch (NotFoundException e){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
