@@ -1,6 +1,6 @@
-package lk.ijse.crop_monitor.entity;
+package lk.ijse.crop_monitor.dto.impl;
 
-import jakarta.persistence.*;
+import lk.ijse.crop_monitor.entity.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,12 +8,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Entity
-@Table(name = "user")
-public class User {
-    @Id
+public class UserDto {
     private String email;
+    private Role role;    // Represented as a String or Enum name for the Role
     private String password;
-    @Enumerated(value = EnumType.STRING)
-    private Role role;
 }

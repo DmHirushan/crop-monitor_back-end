@@ -24,6 +24,7 @@ public class Staff {
     @Column(name = "designation")
     private String designation;
     @Column(name = "Gender")
+    @Enumerated(EnumType.STRING)
     private Gender gender;
     @Column(name = "joined_date")
     private String joinedDate;
@@ -44,13 +45,20 @@ public class Staff {
     @Column(name = "email")
     private String email;
     @Column(name = "role")
+    @Enumerated(EnumType.STRING)
     private Role role;
+
+    @OneToOne(mappedBy = "staff")
+    private Equipment equipment;
 
     @ManyToMany(mappedBy = "staff")
 //    @Column(name = "fields")
-    private List<Field> fields;
+    private List<Field> field;
 
-    @OneToMany(mappedBy = "allocatedStaffMemberDetails")
+    @OneToMany(mappedBy = "staff")
 //    @Column(name = "vehicle")
     private List<Vehicle> vehicles;
+
+    @ManyToMany(mappedBy = "staff")
+    private List<CropDetails> cropDetails;
 }

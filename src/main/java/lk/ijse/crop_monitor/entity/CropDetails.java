@@ -14,18 +14,34 @@ import java.util.List;
 @Table(name = "crop_details")
 public class CropDetails {
     @Id
+    @Column(name = "log_code")
     private String logCode;
     private Date logDate;
     private String logDetails;
+    @Column(columnDefinition = "LONGTEXT")
     private String observedImage;
 
-    @OneToMany
-    @JoinColumn(name = "field_code")
-    private List<Field> fields;
-    @OneToMany
-    @JoinColumn(name = "crop_code")
-    private List<Crop> crops;
-    @OneToMany
-    @JoinColumn(name = "staff_member_id")
+    @ManyToMany
+    @JoinTable(
+            name = "field_log",
+            joinColumns = @JoinColumn(name = "field_code"),
+            inverseJoinColumns = @JoinColumn(name = "log_code")
+    )
+    private List<Field> field;
+
+    @ManyToMany
+    @JoinTable(
+            name = "log_crop_details",
+            joinColumns = @JoinColumn(name = "log_code"),
+            inverseJoinColumns = @JoinColumn(name = "crop_code")
+    )
+    private List<Crop> crop;
+
+    @ManyToMany
+    @JoinTable(
+            name = "log_staff",
+            joinColumns = @JoinColumn(name = "log_code"),
+            inverseJoinColumns = @JoinColumn(name = "staff_member_id")
+    )
     private List<Staff> staff;
 }

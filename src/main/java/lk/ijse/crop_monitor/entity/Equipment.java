@@ -17,17 +17,16 @@ public class Equipment {
     @Column(name = "equipment_name")
     private String name;
     @Column(name = "equipment_type")
+    @Enumerated(EnumType.STRING)
     private EquipmentType equipmentType;
     @Column(name = "availability_status")
     private Status status;
 
-    @ManyToOne
-    @JoinColumn(name = "staff_member_id")
-//    @Column(name = "assigned_staff_details")
-    private Staff assignedStaffDetails;
+    @OneToOne(optional = true)
+    @JoinColumn(name = "staff_member_id", referencedColumnName = "staff_member_id")
+    private Staff staff;
 
     @ManyToOne
-    @JoinColumn(name = "field_code")
-//    @Column(name = "assigned_field_details")
-    private Field assignedFieldDetails;
+    @JoinColumn(name = "field_code", referencedColumnName = "field_code")
+    private Field field;
 }
