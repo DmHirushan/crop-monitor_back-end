@@ -7,12 +7,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Vehicle {
+public class VehicleDto {
     private String vehicleCode;
     private String licensePlateNumber;
     private String vehicleCategory;
     private String fuelType;
     private String status;
-    private String allocatedStaffId; // Reference to the staff member's ID
     private String remarks;
+    private String staffId; // Reference to the staff member's ID
 }
