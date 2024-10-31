@@ -21,6 +21,7 @@ public class Vehicle {
     @Column(name = "fuel_type")
     private String fuelType;
     @Column(name = "status")
+    @Enumerated(EnumType.STRING)
     private String status;
 
     @ManyToOne

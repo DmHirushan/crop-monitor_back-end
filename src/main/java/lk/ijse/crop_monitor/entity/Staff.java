@@ -24,6 +24,7 @@ public class Staff {
     @Column(name = "designation")
     private String designation;
     @Column(name = "Gender")
+    @Enumerated(EnumType.STRING)
     private Gender gender;
     @Column(name = "joined_date")
     private String joinedDate;
@@ -44,6 +45,7 @@ public class Staff {
     @Column(name = "email")
     private String email;
     @Column(name = "role")
+    @Enumerated(EnumType.STRING)
     private Role role;
 
     @OneToOne(mappedBy = "staff")
