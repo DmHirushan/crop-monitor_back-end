@@ -46,18 +46,17 @@ public class Staff {
     @Column(name = "role")
     private Role role;
 
-    @OneToMany(mappedBy = "assignedStaffDetails")
-    private List<Equipment> equipment;
+    @OneToOne(mappedBy = "staff")
+    private Equipment equipment;
 
     @ManyToMany(mappedBy = "staff")
 //    @Column(name = "fields")
-    private List<Field> fields;
+    private List<Field> field;
 
-    @OneToMany(mappedBy = "allocatedStaffMemberDetails")
+    @OneToMany(mappedBy = "staff")
 //    @Column(name = "vehicle")
     private List<Vehicle> vehicles;
 
-    @ManyToOne
-    @JoinColumn(name = "log_code")
-    private CropDetails cropDetails;
+    @ManyToMany(mappedBy = "staff")
+    private List<CropDetails> cropDetails;
 }

@@ -24,9 +24,9 @@ public class Vehicle {
     private String status;
 
     @ManyToOne
-    @JoinColumn(name = "staff_member_id")
-//    @Column(name = "allocated_staff_members")
-    private Staff allocatedStaffMemberDetails;
+    @JoinColumn(name = "staff_member_id", referencedColumnName = "staff_member_id")
+    private Staff staff;
+
     @Column(name = "remarks")
     private String remarks;
 }
