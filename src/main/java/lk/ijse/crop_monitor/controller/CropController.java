@@ -45,7 +45,7 @@ public class CropController {
             cropDto.setCategory(category);
             cropDto.setCropSeason(cropSeason);
             cropDto.setFieldCode(fieldCode);
-            cropDto.setCropDetailsCode(cropDetailsCode);
+
             cropService.saveCrop(cropDto);
             return new ResponseEntity<>(HttpStatus.CREATED);
         }catch (DataPersistFailedException e) {
@@ -94,7 +94,7 @@ public class CropController {
             updateCrop.setCategory(category);
             updateCrop.setCropSeason(cropSeason);
             updateCrop.setFieldCode(fieldCode);
-            updateCrop.setCropDetailsCode(cropDetailsCode);
+
             cropService.updateCrop(updateCrop);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }catch (NotFoundException e){

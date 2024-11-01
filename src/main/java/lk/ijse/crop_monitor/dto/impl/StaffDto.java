@@ -1,5 +1,6 @@
 package lk.ijse.crop_monitor.dto.impl;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lk.ijse.crop_monitor.customObj.StaffResponse;
 import lk.ijse.crop_monitor.dto.SuperDto;
 import lombok.AllArgsConstructor;
@@ -18,7 +19,8 @@ public class StaffDto implements SuperDto, StaffResponse {
     private String designation;
     private String gender;// Could be a String or Enum name for Gender
     private String joinedDate;
-    private Date DOB;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private String DOB;
     private String addressLine1;
     private String addressLine2;
     private String addressLine3;
@@ -27,9 +29,4 @@ public class StaffDto implements SuperDto, StaffResponse {
     private String contactNo;
     private String email;
     private String role;                // Could be a String or Enum name for Role
-    private String equipmentId;  // List of equipment IDs associated with this staff
-    private List<String> fieldCodes;    // List of field codes associated with this staff
-    private List<String> vehicleCodes;  // List of vehicle codes associated with this staff
-    private List<String> cropDetailsLogCode;  // Log code for associated crop details, if any
-
 }

@@ -16,8 +16,8 @@ public class FieldDto {
     private double fieldSize;// List of staff member IDs associated with this field
     private String image1;
     private String image2;
-    private List<String> cropCodes;   // List of crop codes associated with this field
-    private List<String> staffIds;
-    private List<String> equipmentIds; // List of equipment IDs assigned to this field
-    private List<String> cropDetailsLogCode; // Log code for associated crop details, if any
+//    private List<String> cropCodes;   // List of crop codes associated with this field
+//    private List<String> staffIds;
+//    private List<String> equipmentIds; // List of equipment IDs assigned to this field
+//    private List<String> cropDetailsLogCode; // Log code for associated crop details, if any
 }

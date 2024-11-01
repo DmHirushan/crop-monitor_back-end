@@ -20,6 +20,7 @@ public class Equipment {
     @Enumerated(EnumType.STRING)
     private EquipmentType equipmentType;
     @Column(name = "availability_status")
+    @Enumerated(EnumType.STRING)
     private Status status;
 
     @OneToOne(optional = true)
