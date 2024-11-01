@@ -1,5 +1,6 @@
 package lk.ijse.crop_monitor.controller;
 
+import lk.ijse.crop_monitor.customObj.StaffResponse;
 import lk.ijse.crop_monitor.dto.impl.StaffDto;
 import lk.ijse.crop_monitor.exception.DataPersistFailedException;
 import lk.ijse.crop_monitor.service.StaffService;
@@ -25,5 +26,10 @@ public class StaffController {
         }catch (Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @GetMapping("/{id}")
+    public StaffResponse getStaffMember(@PathVariable ("id") String id){
+        return staffService.getStaffMember(id);
     }
 }
