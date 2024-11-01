@@ -28,7 +28,7 @@ public class CropDetailServiceImpl implements CropDetailService {
 
     @Override
     public void saveCropDetail(CropDetailsDto cropDetailsDto) {
-        cropDetailsDto.setLogCode(AppUtil.createCropDetailCode());
+        cropDetailsDto.setLogCode(AppUtil.createVehicleCode());
         CropDetails savedCropDetails = cropDetailRepository.save(mapping.convertToEntity(cropDetailsDto, CropDetails.class));
         if (savedCropDetails == null && savedCropDetails.getLogCode() == null){
             throw new DataPersistFailedException("Can't save Crop Details");
