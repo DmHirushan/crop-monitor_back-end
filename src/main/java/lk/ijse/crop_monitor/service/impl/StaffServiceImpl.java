@@ -63,6 +63,7 @@ public class StaffServiceImpl implements StaffService {
         if (!tmpStaffMember.isPresent()){
             throw new NotFoundException("Staff Member Not Found");
         }else {
+
            staffRepository.save(mapping.convertToEntity(staffDto, Staff.class));
         }
     }
