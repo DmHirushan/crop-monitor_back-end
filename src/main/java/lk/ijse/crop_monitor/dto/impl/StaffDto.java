@@ -29,4 +29,8 @@ public class StaffDto implements SuperDto, StaffResponse {
     private String contactNo;
     private String email;
     private String role;                // Could be a String or Enum name for Role
+    private List<String> fieldCode;
+    private List<String> cropDetailsLogCode;
+    private String equipmentId;
+    private List<String> vehicleCode;
 }

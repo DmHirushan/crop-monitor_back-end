@@ -16,5 +16,5 @@ public class VehicleDto implements SuperDto, VehicleResponse {
     private String fuelType;
     private String status;
     private String remarks;
-    private StaffDto staff; // Reference to the staff member's ID
+    private String staffId; // Reference to the staff member's ID
 }
