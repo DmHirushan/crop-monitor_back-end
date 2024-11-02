@@ -59,6 +59,8 @@ public class VehicleController {
             vehicleDto.setVehicleCode(vehicleCode);
             vehicleService.updateVehicle(vehicleDto);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }catch (DuplicateLicensePlateException e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }catch (NotFoundException e){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }catch (Exception e){

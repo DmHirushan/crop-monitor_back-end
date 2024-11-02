@@ -12,6 +12,7 @@ import lk.ijse.crop_monitor.entity.Vehicle;
 import lk.ijse.crop_monitor.exception.DataPersistFailedException;
 import lk.ijse.crop_monitor.exception.DuplicateLicensePlateException;
 import lk.ijse.crop_monitor.exception.NotFoundException;
+import lk.ijse.crop_monitor.repository.StaffRepository;
 import lk.ijse.crop_monitor.repository.VehicleRepository;
 import lk.ijse.crop_monitor.service.VehicleService;
 import lk.ijse.crop_monitor.util.AppUtil;
@@ -29,6 +30,7 @@ import java.util.Optional;
 public class VehicleServiceImpl implements VehicleService {
     private final VehicleRepository vehicleRepository;
     private final Mapping mapping;
+    private final StaffRepository staffRepository;
 
     @Override
     public void saveVehicle(VehicleDto vehicleDto) {
@@ -69,9 +71,15 @@ public class VehicleServiceImpl implements VehicleService {
         Vehicle vehicle = vehicleRepository.findById(vehicleDto.getVehicleCode())
                 .orElseThrow(() -> new NotFoundException("vehicle not found"));
 
+        List<VehicleDto> allVehicle = getAllVehicle();
+        for (int i=0; i<allVehicle.size(); i++){
+            if (allVehicle.get(i).getLicensePlateNumber().equals(vehicleDto.getLicensePlateNumber())){
+                throw new DuplicateLicensePlateException("This license plate number already exists :" + vehicleDto.getLicensePlateNumber());
+            }
+        }
         vehicle.setStatus(vehicleDto.getStatus());
         vehicle.setRemarks(vehicleDto.getRemarks());
-
+        vehicle.setStaff(staffRepository.getStaffMemberById(vehicleDto.getStaffId()));
         vehicleRepository.save(vehicle);
     }
 
