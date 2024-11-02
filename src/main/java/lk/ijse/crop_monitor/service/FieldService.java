@@ -1,14 +1,16 @@
 package lk.ijse.crop_monitor.service;
 
 import lk.ijse.crop_monitor.customObj.CropResponse;
+import lk.ijse.crop_monitor.customObj.FieldResponse;
 import lk.ijse.crop_monitor.dto.impl.CropDto;
+import lk.ijse.crop_monitor.dto.impl.FieldDto;
 
 import java.util.List;
 
 public interface FieldService {
-    void saveField(CropDto cropDto);
-    CropResponse getField(String cropCode);
-    void deleteField(String cropCode);
-    void updateField(CropDto cropDto);
-    List<CropDto> getAllFields();
+    void saveField(FieldDto fieldDto);
+    FieldResponse getField(String fieldCode);
+    void deleteField(String fieldCode);
+    void updateField(FieldDto fieldDto, List<String> staffIds);
+    List<FieldDto> getAllFields();
 }

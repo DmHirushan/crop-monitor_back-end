@@ -23,4 +23,8 @@ public class AppUtil {
     public static String createVehicleCode() {
         return "VEHICLE"+ UUID.randomUUID();
     }
+
+    public static String createFieldCode() {
+        return "FIELD"+ UUID.randomUUID();
+    }
 }
