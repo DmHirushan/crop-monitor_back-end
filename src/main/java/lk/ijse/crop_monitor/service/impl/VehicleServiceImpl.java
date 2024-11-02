@@ -10,12 +10,14 @@ import lk.ijse.crop_monitor.entity.CropDetails;
 import lk.ijse.crop_monitor.entity.Staff;
 import lk.ijse.crop_monitor.entity.Vehicle;
 import lk.ijse.crop_monitor.exception.DataPersistFailedException;
+import lk.ijse.crop_monitor.exception.DuplicateLicensePlateException;
 import lk.ijse.crop_monitor.exception.NotFoundException;
 import lk.ijse.crop_monitor.repository.VehicleRepository;
 import lk.ijse.crop_monitor.service.VehicleService;
 import lk.ijse.crop_monitor.util.AppUtil;
 import lk.ijse.crop_monitor.util.Mapping;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,6 +32,12 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     public void saveVehicle(VehicleDto vehicleDto) {
+        List<VehicleDto> allVehicle = getAllVehicle();
+        for (int i=0; i<allVehicle.size(); i++){
+            if (allVehicle.get(i).getLicensePlateNumber().equals(vehicleDto.getLicensePlateNumber())){
+                throw new DuplicateLicensePlateException("This license plate number already exists :" + vehicleDto.getLicensePlateNumber());
+            }
+        }
         vehicleDto.setVehicleCode(AppUtil.createVehicleCode());
         Vehicle savedVehicle = vehicleRepository.save(mapping.convertToEntity(vehicleDto, Vehicle.class));
         if (savedVehicle == null && savedVehicle.getVehicleCode() == null){
@@ -63,12 +71,6 @@ public class VehicleServiceImpl implements VehicleService {
 
         vehicle.setStatus(vehicleDto.getStatus());
         vehicle.setRemarks(vehicleDto.getRemarks());
-
-        if (vehicleDto.getStaff() != null) {
-            vehicle.setStaff(mapping.convertToDto(vehicleDto.getStaff(), Staff.class));
-        }else{
-            vehicle.setStaff(null);
-        }
 
         vehicleRepository.save(vehicle);
     }

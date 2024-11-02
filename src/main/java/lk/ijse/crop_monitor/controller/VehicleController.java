@@ -5,6 +5,7 @@ import lk.ijse.crop_monitor.customObj.VehicleResponse;
 import lk.ijse.crop_monitor.dto.impl.StaffDto;
 import lk.ijse.crop_monitor.dto.impl.VehicleDto;
 import lk.ijse.crop_monitor.exception.DataPersistFailedException;
+import lk.ijse.crop_monitor.exception.DuplicateLicensePlateException;
 import lk.ijse.crop_monitor.exception.NotFoundException;
 import lk.ijse.crop_monitor.service.VehicleService;
 import lombok.RequiredArgsConstructor;
@@ -23,11 +24,12 @@ public class VehicleController {
 
     @PostMapping
     public ResponseEntity<Void> saveVehicle(@RequestBody VehicleDto vehicleDto){
-        try{
+        try {
             vehicleService.saveVehicle(vehicleDto);
             return new ResponseEntity<>(HttpStatus.CREATED);
-        }catch (
-            DataPersistFailedException e){
+        }catch (DuplicateLicensePlateException e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }catch (DataPersistFailedException e){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }catch (Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
