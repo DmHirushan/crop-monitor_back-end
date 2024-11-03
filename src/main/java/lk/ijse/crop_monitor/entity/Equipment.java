@@ -27,7 +27,7 @@ public class Equipment {
     @JoinColumn(name = "staff_member_id", referencedColumnName = "staff_member_id")
     private Staff staff;
 
-    @ManyToOne
+    @ManyToOne(optional = true)
     @JoinColumn(name = "field_code", referencedColumnName = "field_code")
     private Field field;
 }

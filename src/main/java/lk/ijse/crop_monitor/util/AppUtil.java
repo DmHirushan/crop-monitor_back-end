@@ -27,4 +27,8 @@ public class AppUtil {
     public static String createFieldCode() {
         return "FIELD"+ UUID.randomUUID();
     }
+
+    public static String createEquipmentId() {
+        return "EQUIPMENT"+ UUID.randomUUID();
+    }
 }
