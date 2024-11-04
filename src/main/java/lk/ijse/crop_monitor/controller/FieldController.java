@@ -59,7 +59,7 @@ public class FieldController {
     }
 
     @PatchMapping(value = "/{fieldCode}", params = "staffIds")
-    public ResponseEntity<?> updateField(
+    public ResponseEntity<Void> updateField(
             @PathVariable("fieldCode") String fieldCode,
             @RequestParam("fieldName") String fieldName,
             @RequestParam("latitude") int latitude,
@@ -67,7 +67,8 @@ public class FieldController {
             @RequestParam("fieldSize") double fieldSize,
             @RequestParam("image1") MultipartFile image1,
             @RequestParam("image2") MultipartFile image2,
-            @RequestParam("staffIds") List<String> staffIds )
+            @RequestParam("staffIds") List<String> staffIds
+    )
     {
         try{
             FieldDto fieldDTO = new FieldDto();

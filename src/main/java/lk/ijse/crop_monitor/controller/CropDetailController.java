@@ -29,7 +29,7 @@ public class CropDetailController {
     @PostMapping
     public ResponseEntity<?> saveCropDetails(
             @RequestPart(value = "logDetails") String logDetails,
-            @RequestPart(value = "observedImg") MultipartFile observedImg,
+            @RequestPart(value = "observedImage") MultipartFile observedImg,
             @RequestParam(value = "fieldCode") List<String> fieldCodes,
             @RequestParam(value = "cropCode") List<String> cropCodes,
             @RequestParam(value = "staffId") List<String> staffIds
