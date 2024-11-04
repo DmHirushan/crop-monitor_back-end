@@ -19,5 +19,4 @@ public class CropDto implements SuperDto, CropResponse {
     private String category;
     private String cropSeason;
     private String fieldCode;         // Reference to Field entity's field code
-    private List<String> logCodes;
 }

@@ -6,9 +6,13 @@ import lk.ijse.crop_monitor.dto.impl.CropDto;
 import java.util.List;
 
 public interface CropService {
-    void saveCrop(CropDto cropDto);
-    CropResponse getCrop(String cropCode);
-    void deleteCrop(String cropCode);
-    void updateCrop(CropDto cropDto);
-    List<CropDto> getAllCrops();
+    void saveCrop(CropDto cropDTO, String fieldCode);
+
+    CropResponse getCrop(String id);
+
+    void updateCrop(CropDto cropDTO, String fieldCode, String id);
+
+    void deleteCrop(String id);
+
+    List getAllCrops();
 }

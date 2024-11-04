@@ -36,7 +36,8 @@ public class FieldController {
 //            @RequestPart ("staffIds") List<String> staffIds
 //            @RequestPart ("equipmentIds") List<String> equipmentIds,
 //            @RequestPart ("cropDetailsLogCode") List<String> cropDetailsLogCode
-    ){
+    )
+    {
         try {
             byte[] image1Bytes = image1.getBytes();
             byte[] image2Bytes = image2.getBytes();
@@ -50,6 +51,8 @@ public class FieldController {
             fieldDto.setImage2(image2Base64);
             fieldService.saveField(fieldDto);
             return new ResponseEntity<>(HttpStatus.CREATED);
+        }catch (DataPersistFailedException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -59,18 +62,18 @@ public class FieldController {
     public ResponseEntity<?> updateField(
             @PathVariable("fieldCode") String fieldCode,
             @RequestParam("fieldName") String fieldName,
-            @RequestParam("fieldLocationX") int fieldLocationX,
+            @RequestParam("latitude") int latitude,
+            @RequestParam("longitude") int longitude,
             @RequestParam("fieldSize") double fieldSize,
             @RequestParam("image1") MultipartFile image1,
             @RequestParam("image2") MultipartFile image2,
-            @RequestParam("fieldLocationY") int fieldLocationY,
             @RequestParam("staffIds") List<String> staffIds )
     {
         try{
             FieldDto fieldDTO = new FieldDto();
             fieldDTO.setFieldCode(fieldCode);
             fieldDTO.setFieldName(fieldName);
-            fieldDTO.setFieldLocation(new Point(fieldLocationX, fieldLocationY));
+            fieldDTO.setFieldLocation(new Point(latitude, longitude));
             fieldDTO.setFieldSize(fieldSize);
             fieldDTO.setImage1(AppUtil.toBase64Image(image1.getBytes()));
             fieldDTO.setImage2(AppUtil.toBase64Image(image2.getBytes()));
