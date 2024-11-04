@@ -7,9 +7,13 @@ import lk.ijse.crop_monitor.dto.impl.CropDto;
 import java.util.List;
 
 public interface CropDetailService {
-    void saveCropDetail(CropDetailsDto cropDetailsDto);
-    CropDetailResponse getCropDetail(String logCode);
-    void deleteCropDetail(String logCode);
-    void updateCropDetail(CropDetailsDto cropDetailsDto);
+    void saveCropDetails(CropDetailsDto cropDetailsDTO);
+
+    void updateCropDetails(CropDetailsDto cropDetailsDTO , String logCode);
+
+    CropDetailResponse findCropDetailsByLogCode(String logCode);
+
+    void deleteCropDetailsByLogCode(String logCode);
+
     List<CropDetailsDto> getAllCropDetails();
 }

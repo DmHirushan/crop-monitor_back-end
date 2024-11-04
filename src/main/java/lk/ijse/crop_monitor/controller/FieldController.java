@@ -55,9 +55,9 @@ public class FieldController {
         }
     }
 
-    @PatchMapping(params = "staffIds")
+    @PatchMapping(value = "/{fieldCode}", params = "staffIds")
     public ResponseEntity<?> updateField(
-            @RequestParam("fieldCode") String fieldCode,
+            @PathVariable("fieldCode") String fieldCode,
             @RequestParam("fieldName") String fieldName,
             @RequestParam("fieldLocationX") int fieldLocationX,
             @RequestParam("fieldSize") double fieldSize,

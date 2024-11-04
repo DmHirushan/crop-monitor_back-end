@@ -11,6 +11,7 @@ import lk.ijse.crop_monitor.entity.*;
 import lk.ijse.crop_monitor.exception.DataPersistFailedException;
 import lk.ijse.crop_monitor.exception.NotFoundException;
 import lk.ijse.crop_monitor.repository.FieldRepository;
+import lk.ijse.crop_monitor.repository.StaffRepository;
 import lk.ijse.crop_monitor.service.FieldService;
 import lk.ijse.crop_monitor.util.AppUtil;
 import lk.ijse.crop_monitor.util.Mapping;
@@ -18,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +27,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class FieldServiceImpl implements FieldService {
     private final FieldRepository fieldRepository;
+    private final StaffRepository staffRepository;
     private final Mapping mapping;
 
 
@@ -59,12 +62,18 @@ public class FieldServiceImpl implements FieldService {
 
     @Override
     public void updateField(FieldDto fieldDto, List<String> staffIds) {
-        var tmpStaffMember = fieldRepository.findById(fieldDto.getFieldCode());
-        if (!tmpStaffMember.isPresent()){
-            throw new NotFoundException("Staff Member Not Found");
+        Optional <Field> tmpField = fieldRepository.findById(fieldDto.getFieldCode());
+        if (!tmpField.isPresent()){
+            throw new NotFoundException("Field Not Found");
         }else {
-            fieldDto.setStaffIds(staffIds);
-            fieldRepository.save(mapping.convertToEntity(fieldDto, Field.class));
+            Field field = mapping.convertToEntity(fieldDto, Field.class);
+            List<Staff> staff = new ArrayList<>();
+            for (String staffId : staffIds) {
+                Optional<Staff> optional = staffRepository.findById(staffId);
+                optional.ifPresent(staff::add);
+            }
+            field.setStaff(staff);
+            fieldRepository.save(field);
         }
     }
 
