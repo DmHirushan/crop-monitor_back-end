@@ -75,7 +75,7 @@ public class CropServiceImpl implements CropService {
     public void deleteCrop(String id) {
         Optional<Crop> byCropCode = cropRepository.findById(id);
         if (byCropCode.isPresent()){
-            cropRepository.delete(byCropCode.get());
+            cropRepository.deleteById(id);
         }else {
             throw new NotFoundException("Crop not found");
         }

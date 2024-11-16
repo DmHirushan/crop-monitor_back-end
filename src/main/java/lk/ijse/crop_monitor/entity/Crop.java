@@ -30,6 +30,6 @@ public class Crop {
     @JoinColumn(name = "field_code", referencedColumnName = "field_code", nullable = false)
     private Field field;
 
-    @ManyToMany(mappedBy = "crop")
+    @ManyToMany(mappedBy = "crop", cascade = CascadeType.REMOVE)
     private List<CropDetails> cropDetails;
 }

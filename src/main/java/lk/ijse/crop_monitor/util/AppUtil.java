@@ -17,7 +17,7 @@ public class AppUtil {
     }
 
     public static String createStaffId(){
-        return "STAFF_MEMBER"+ UUID.randomUUID();
+        return "STAFF" + "001";
     }
 
     public static String createVehicleCode() {
@@ -25,7 +25,7 @@ public class AppUtil {
     }
 
     public static String createFieldCode() {
-        return "FIELD"+ UUID.randomUUID();
+        return "FIELD"+ "001";
     }
 
     public static String createEquipmentId() {
