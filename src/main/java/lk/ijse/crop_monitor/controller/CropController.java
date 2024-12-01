@@ -72,8 +72,7 @@ public class CropController {
 
     @PatchMapping(value = "/{id}")
     public ResponseEntity<?> updateCrop(
-            @RequestPart("cropName") String cropName,
-            @RequestPart("cropType") String cropCategory,
+            @RequestPart("cropCategory") String cropCategory,
             @RequestPart("cropSeason") String cropSeason,
             @RequestPart("cropScientificName") String cropScientificName,
             @RequestParam("cropImage") MultipartFile cropImage,
@@ -81,7 +80,7 @@ public class CropController {
             @PathVariable("id") String id
     ) throws IOException {
         CropDto cropDTO = new CropDto();
-        cropDTO.setCropCommonName(cropName);
+//        cropDTO.setCropCommonName(cropName);
         cropDTO.setCategory(cropCategory);
         cropDTO.setCropSeason(cropSeason);
         cropDTO.setCropScientificName(cropScientificName);
