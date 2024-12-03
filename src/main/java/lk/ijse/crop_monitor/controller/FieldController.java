@@ -8,13 +8,13 @@ import lk.ijse.crop_monitor.exception.NotFoundException;
 import lk.ijse.crop_monitor.service.FieldService;
 import lk.ijse.crop_monitor.util.AppUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.geo.Point;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.awt.*;
 import java.util.List;
 
 @RestController
@@ -27,8 +27,8 @@ public class FieldController {
     @PostMapping
     public ResponseEntity<Void> saveField(
             @RequestParam ("fieldName") String fieldName,
-            @RequestParam ("latitude") int latitude,
-            @RequestParam ("longitude") int longitude,
+            @RequestParam ("latitude") double latitude,
+            @RequestParam ("longitude") double longitude,
             @RequestParam ("fieldSize") double fieldSize,
             @RequestParam ("image1")MultipartFile image1,
             @RequestParam ("image2") MultipartFile image2
