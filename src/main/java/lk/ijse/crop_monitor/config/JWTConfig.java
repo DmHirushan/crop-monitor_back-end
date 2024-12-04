@@ -24,7 +24,9 @@ public class JWTConfig extends OncePerRequestFilter {
     private final UserService userService;
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException, java.io.IOException {
+        System.out.println("Bdu Awa..");
         String initToken = request.getHeader("Authorization");
+        System.out.println(initToken);
         String userEmail;
         String jwtToken;
 

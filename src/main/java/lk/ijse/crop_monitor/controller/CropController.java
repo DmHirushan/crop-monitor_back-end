@@ -1,5 +1,6 @@
 package lk.ijse.crop_monitor.controller;
 
+import jakarta.validation.Valid;
 import lk.ijse.crop_monitor.dto.impl.CropDto;
 import lk.ijse.crop_monitor.exception.DataPersistFailedException;
 import lk.ijse.crop_monitor.exception.NotFoundException;
@@ -17,7 +18,7 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("api/v1/crop")
-@CrossOrigin
+@CrossOrigin("*")
 @RequiredArgsConstructor
 public class CropController {
     private final CropService cropService;

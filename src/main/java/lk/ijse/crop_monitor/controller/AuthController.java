@@ -15,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping("api/v1/auth")
 @RequiredArgsConstructor
-@CrossOrigin
+@CrossOrigin("*")
 public class AuthController {
     private final AuthenticationService authenticationService;
     private final PasswordEncoder passwordEncoder;
