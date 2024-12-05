@@ -14,14 +14,13 @@ public class Vehicle {
     @Id
     @Column(name = "vehicle_code")
     private String vehicleCode;
-    @Column(name = "licence_plate_number")
+    @Column(name = "licence_plate_number", unique = true)
     private String licensePlateNumber;
     @Column(name = "vehicle_category")
     private String vehicleCategory;
     @Column(name = "fuel_type")
     private String fuelType;
     @Column(name = "status")
-    @Enumerated(EnumType.STRING)
     private String status;
 
     @ManyToOne

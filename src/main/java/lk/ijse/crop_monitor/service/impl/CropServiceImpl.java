@@ -5,9 +5,11 @@ import lk.ijse.crop_monitor.customObj.CropResponse;
 import lk.ijse.crop_monitor.customObj.impl.CropErrorResponse;
 import lk.ijse.crop_monitor.dto.impl.CropDto;
 import lk.ijse.crop_monitor.entity.Crop;
+import lk.ijse.crop_monitor.entity.Field;
 import lk.ijse.crop_monitor.exception.DataPersistFailedException;
 import lk.ijse.crop_monitor.exception.NotFoundException;
 import lk.ijse.crop_monitor.repository.CropRepository;
+import lk.ijse.crop_monitor.repository.FieldRepository;
 import lk.ijse.crop_monitor.service.CropService;
 import lk.ijse.crop_monitor.util.AppUtil;
 import lk.ijse.crop_monitor.util.Mapping;
@@ -23,49 +25,59 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CropServiceImpl implements CropService {
     private final CropRepository cropRepository;
+    private final FieldRepository fieldRepository;
     private final Mapping mapping;
 
     @Override
-    public void saveCrop(CropDto cropDto) {
-        cropDto.setCropCode(AppUtil.createCropCode());
-        Crop savedUser = cropRepository.save(mapping.convertToEntity(cropDto, Crop.class));
-        if (savedUser == null && savedUser.getCropCode() == null) {
-            throw new DataPersistFailedException("Can't save the crop!");
+    public void saveCrop(CropDto cropDTO, String fieldCode) {
+        cropDTO.setCropCode(AppUtil.createCropCode());
+        Crop crop = mapping.convertToDto(cropDTO, Crop.class);
+        Field field = fieldRepository.findById(fieldCode).orElseThrow(
+                () -> new NotFoundException("Field not found")
+        );
+        crop.setField(field);
+        Crop save = cropRepository.save(crop);
+        if (save == null){
+            throw new DataPersistFailedException("Crop save failed");
         }
     }
 
     @Override
-    public CropResponse getCrop(String cropCode) {
-        if (cropRepository.existsById(cropCode)) {
-            return mapping.convertToDto(cropRepository.getCropByCropCode(cropCode), CropDto.class);
+    public CropResponse getCrop(String id) {
+        Optional<Crop> byCropCode = cropRepository.findById(id);
+        if (byCropCode.isPresent()){
+            CropDto cropDTO = mapping.convertToDto(byCropCode.get(), CropDto.class);
+            return cropDTO;
         }else {
-            return new CropErrorResponse(0, "Crop not found");
+            return new CropErrorResponse(0,"Crop not found");
         }
     }
 
     @Override
-    public void deleteCrop(String cropCode) {
-        Optional<Crop> selectedCrop = cropRepository.findById(cropCode);
-        if (!selectedCrop.isPresent()){
-            throw new NotFoundException("User not found");
+    public void updateCrop(CropDto cropDTO, String fieldCode, String id) {
+        Optional<Crop> byCropCode = cropRepository.findById(id);
+        if (byCropCode.isPresent()){
+            Field field = fieldRepository.findById(fieldCode).orElseThrow(
+                    () -> new NotFoundException("Field not found")
+            );
+            byCropCode.get().setField(field);
+            byCropCode.get().setCropCommonName(cropDTO.getCropCommonName());
+            byCropCode.get().setCategory(cropDTO.getCategory());
+            byCropCode.get().setCropSeason(cropDTO.getCropSeason());
+            byCropCode.get().setCropScientificName(cropDTO.getCropScientificName());
+            byCropCode.get().setCropImage(cropDTO.getCropImage());
         }else {
-            cropRepository.deleteById(cropCode);
-        }
-    }
-
-    @Override
-    public void updateCrop(CropDto cropDto) {
-        Optional<Crop> tmpCrop = cropRepository.findById(cropDto.getCropCode());
-        if (!tmpCrop.isPresent()){
             throw new NotFoundException("Crop not found");
-        }else {
-            tmpCrop.get().setCropCommonName(cropDto.getCropCommonName());
-            tmpCrop.get().setCropScientificName(cropDto.getCropScientificName());
-            tmpCrop.get().setCropImage(cropDto.getCropImage());
-            tmpCrop.get().setCategory(cropDto.getCategory());
-            tmpCrop.get().setCropSeason(cropDto.getCropSeason());
-            tmpCrop.get().getField().setFieldCode((cropDto.getFieldCode()));
+        }
+    }
 
+    @Override
+    public void deleteCrop(String id) {
+        Optional<Crop> byCropCode = cropRepository.findById(id);
+        if (byCropCode.isPresent()){
+            cropRepository.deleteById(id);
+        }else {
+            throw new NotFoundException("Crop not found");
         }
     }
 
@@ -73,6 +85,5 @@ public class CropServiceImpl implements CropService {
     public List<CropDto> getAllCrops() {
         return mapping.convertToDto(cropRepository.findAll(), CropDto.class);
     }
-
 
 }

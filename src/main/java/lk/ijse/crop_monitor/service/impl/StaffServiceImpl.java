@@ -61,21 +61,10 @@ public class StaffServiceImpl implements StaffService {
     public void updateStaffMember(StaffDto staffDto) {
         var tmpStaffMember = staffRepository.findById(staffDto.getId());
         if (!tmpStaffMember.isPresent()){
-            throw new NotFoundException("Crop not found");
+            throw new NotFoundException("Staff Member Not Found");
         }else {
-            tmpStaffMember.get().setGender(Gender.valueOf(staffDto.getGender()));
-            tmpStaffMember.get().setRole(Role.valueOf(staffDto.getRole()));
-            tmpStaffMember.get().setDOB(staffDto.getDOB());
-            tmpStaffMember.get().setAddressLine1(staffDto.getAddressLine1());
-            tmpStaffMember.get().setAddressLine2(staffDto.getAddressLine2());
-            tmpStaffMember.get().setAddressLine3(staffDto.getAddressLine3());
-            tmpStaffMember.get().setAddressLine4(staffDto.getAddressLine4());
-            tmpStaffMember.get().setAddressLine5(staffDto.getAddressLine5());
-            tmpStaffMember.get().setContactNo(staffDto.getContactNo());
-            tmpStaffMember.get().setDesignation(staffDto.getDesignation());
-            tmpStaffMember.get().setEmail(staffDto.getEmail());
-            tmpStaffMember.get().setJoinedDate(staffDto.getJoinedDate());
-            tmpStaffMember.get().setLastName(staffDto.getLastName());
+
+           staffRepository.save(mapping.convertToEntity(staffDto, Staff.class));
         }
     }
 

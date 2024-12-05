@@ -1,13 +1,12 @@
 package lk.ijse.crop_monitor.controller;
 
+import lk.ijse.crop_monitor.customObj.EquipmentResponse;
 import lk.ijse.crop_monitor.customObj.StaffResponse;
-import lk.ijse.crop_monitor.dto.impl.CropDetailsDto;
-import lk.ijse.crop_monitor.dto.impl.CropDto;
+import lk.ijse.crop_monitor.dto.impl.EquipmentDto;
 import lk.ijse.crop_monitor.dto.impl.StaffDto;
 import lk.ijse.crop_monitor.exception.DataPersistFailedException;
 import lk.ijse.crop_monitor.exception.NotFoundException;
-import lk.ijse.crop_monitor.service.StaffService;
-import lk.ijse.crop_monitor.util.AppUtil;
+import lk.ijse.crop_monitor.service.EquipmentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,33 +15,34 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/staff")
+@RequestMapping("api/v1/equipment")
 @CrossOrigin
 @RequiredArgsConstructor
-public class StaffController {
-    private final StaffService staffService;
+public class EquipmentController {
+    private final EquipmentService equipmentService;
 
     @PostMapping
-    public ResponseEntity<Void> saveStaffMember(@RequestBody StaffDto staffDto){
+    public ResponseEntity<Void> saveEquipment(@RequestBody EquipmentDto equipmentDto){
         try{
-            staffService.saveStaffMember(staffDto);
+            equipmentService.saveEquipment(equipmentDto);
             return new ResponseEntity<>(HttpStatus.CREATED);
         }catch (DataPersistFailedException e){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            throw e;
+//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @GetMapping("/{id}")
-    public StaffResponse getStaffMember(@PathVariable ("id") String id){
-        return staffService.getStaffMember(id);
+    @GetMapping("/{equipmentId}")
+    public EquipmentResponse getEquipment(@PathVariable ("equipmentId") String equipmentId){
+        return equipmentService.getEquipment(equipmentId);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteStaffMember(@PathVariable ("id") String id){
+    @DeleteMapping("/{equipmentId}")
+    public ResponseEntity<Void> deleteEquipment(@PathVariable ("equipmentId") String equipmentId){
         try{
-            staffService.deleteStaffMember(id);
+            equipmentService.deleteEquipment(equipmentId);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }catch (NotFoundException e){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -52,15 +52,15 @@ public class StaffController {
     }
 
     @GetMapping
-    public List<StaffDto> getAllCropDetails(){
-        return staffService.getAllStaffMembers();
+    public List<EquipmentDto> getAllEquipments(){
+        return equipmentService.getAllEquipments();
     }
 
-    @PatchMapping("/{id}")
-    public ResponseEntity<Void> updateStaffMember(@PathVariable ("id") String id, @RequestBody StaffDto staffDto){
+    @PatchMapping("/{equipmentId}")
+    public ResponseEntity<Void> updateEquipment(@PathVariable ("equipmentId") String equipmentId, @RequestBody EquipmentDto equipmentDto){
         try{
-            staffDto.setId(id);
-            staffService.updateStaffMember(staffDto);
+            equipmentDto.setEquipmentId(equipmentId);
+            equipmentService.updateEquipment(equipmentDto);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }catch (NotFoundException e){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -68,4 +68,5 @@ public class StaffController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 }

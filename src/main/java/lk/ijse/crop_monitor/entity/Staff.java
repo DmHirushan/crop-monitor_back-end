@@ -27,7 +27,7 @@ public class Staff {
     @Enumerated(EnumType.STRING)
     private Gender gender;
     @Column(name = "joined_date")
-    private String joinedDate;
+    private Date joinedDate;
     @Column(name = "date_of_birth")
     private Date DOB;
     @Column(name = "address_line_1")

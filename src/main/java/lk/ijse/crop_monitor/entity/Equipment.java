@@ -20,13 +20,14 @@ public class Equipment {
     @Enumerated(EnumType.STRING)
     private EquipmentType equipmentType;
     @Column(name = "availability_status")
+    @Enumerated(EnumType.STRING)
     private Status status;
 
     @OneToOne(optional = true)
     @JoinColumn(name = "staff_member_id", referencedColumnName = "staff_member_id")
     private Staff staff;
 
-    @ManyToOne
+    @ManyToOne(optional = true)
     @JoinColumn(name = "field_code", referencedColumnName = "field_code")
     private Field field;
 }
